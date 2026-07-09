@@ -1,7 +1,7 @@
-const twigPlugin = require("eleventy-plugin-twig");
+const eleventyPluginTwig = require("@factorial/eleventy-plugin-twig");
 
-module.exports = function(eleventyCcbg) {
-  eleventyCcbg.addPlugin(twigPlugin);
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addPlugin(eleventyPluginTwig);
   
   return {
     dir: {
