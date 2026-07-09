@@ -1,7 +1,20 @@
 const Twig = require("twig");
 
 module.exports = function(eleventyConfig) {
-  // Tell Eleventy to process .twig files using the official twig package
+  // Define custom Hyvor template filters so Twig doesn't panic
+  Twig.extendFilter("template", function(value) {
+    return value || "";
+  });
+  
+  Twig.extendFilter("asset_url", function(value) {
+    return value || "";
+  });
+
+  Twig.extendFilter("asset", function(value) {
+    return value || "";
+  });
+
+  // Tell Eleventy to process .twig files using the configured twig engine
   eleventyConfig.addTemplateFormats("twig");
   eleventyConfig.addExtension("twig", {
     compile: async (inputContent, inputPath) => {
