@@ -1,36 +1,35 @@
 const Twig = require("twig");
+const path = require("path");
 
 module.exports = function(eleventyConfig) {
-  // 1. Mock missing filters so they don't break execution
+  // Pass through your theme's assets, styles, and scripts untouched
+  eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy("css");
+
+  // Keep our mocks active so they don't crash components
   Twig.extendFilter("template", (value) => value || "");
   Twig.extendFilter("asset_url", (value) => value || "");
   Twig.extendFilter("asset", (value) => value || "");
+  Twig.extendFunction("icon", (name) => ``);
 
-  // 2. Mock the missing custom icon() function
-  Twig.extendFunction("icon", (name) => `<!-- Icon: ${name} -->`);
-
-  // 3. Handle Hyvor's proprietary data blocks smoothly
-  eleventyConfig.addTemplateFormats("twig");
-  eleventyConfig.addExtension("twig", {
+  eleventyConfig.addTemplateFormats("twig,html");
+  eleventyConfig.addExtension("html", {
     compile: async (inputContent, inputPath) => {
-      // Hyvor uses custom query syntax like `blog_data(type="tags"...)` 
-      // We safely sanitize those dynamic database query formats out of the raw text before compiling
-      let sanitizedContent = inputContent
-        .replace(/type\s*=\s*"tags"[^}]*/g, 'type="tags"')
-        .replace(/type\s*=\s*"authors"[^}]*/g, 'type="authors"');
-
-      const template = Twig.twig({
-        data: sanitizedContent,
-        path: inputPath,
-        async: false
-      });
       return async (data) => {
-        try {
-          return template.render(data);
-        } catch (e) {
-          // Fallback if an interior nested loop fails deep inside a component
-          return `<!-- Error rendering template component -->`;
+        // If the file uses a twig extension block, let Twig process it relative to the root templates folder
+        if (inputContent.includes("{% extends")) {
+          return new Promise((resolve, reject) => {
+            Twig.renderFile(inputPath, data, (err, html) => {
+              if (err) {
+                // If it fails, output the error message directly to the screen so we can see it
+                resolve(`\n${inputContent}`);
+              } else {
+                resolve(html);
+              }
+            });
+          });
         }
+        return inputContent;
       };
     }
   });
@@ -39,8 +38,6 @@ module.exports = function(eleventyConfig) {
     dir: {
       input: ".",
       output: "_site"
-    },
-    markdownTemplateEngine: "twig",
-    htmlTemplateEngine: "twig"
+    }
   };
 };
