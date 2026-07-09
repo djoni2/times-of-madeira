@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times of Madeira</title>
+    
+    <link rel="stylesheet" href="assets/css/styles.css"> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>Times of Madeira</h1>
+    </header>
+
+    <main class="posts-grid" id="news-grid">
+        <p>Loading the latest updates...</p>
+    </main>
+
+    <script>
+        const SUPABASE_URL = "https://rbfhbcsgjsypuzzgcbpo.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_rV4oivvNDiHh_O_2TLKAQQ_I29j5muX"; // Use your public anon key here!
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function fetchFeed() {
+            const { data, error } = await supabaseClient.from('posts').select('title, slug, description').order('id', { ascending: false });
+            if (error) return;
+            
+            let html = "";
+            data.forEach(post => {
+                html += `
+                <article class="post-card">
+                    <h2><a href="article.html?post=${post.slug}">${post.title}</a></h2>
+                    <p>${post.description}</p>
+                </article>`;
+            });
+            document.getElementById('news-grid').innerHTML = html;
+        }
+        fetchFeed();
+    </script>
+</body>
+</html>
