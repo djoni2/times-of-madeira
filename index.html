@@ -1,32 +1,10 @@
-{% extends "templates/@base.twig" %}
+{% extends "@base.twig" %}
 
 {% block content %}
 <main class="posts-grid" id="news-grid">
     <p>Loading the latest updates...</p>
 </main>
 
-<!-- We load the Supabase library inside our layout block -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-    const SUPABASE_URL = "https://rbfhbcsgjsypuzzgcbpo.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_rV4oivvNDiHh_O_2TLKAQQ_I29j5muX"; 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    async function fetchFeed() {
-        const { data, error } = await supabaseClient.from('posts').select('title, slug, description').order('id', { ascending: false });
-        if (error) return;
-        
-        let html = "";
-        data.forEach(post => {
-            html += `
-            <article class="post-card">
-                <h2><a href="article.html?post=${post.slug}">${post.title}</a></h2>
-                <p>${post.description}</p>
-            </article>`;
-        });
-        document.getElementById('news-grid').innerHTML = html;
-    }
-    fetchFeed();
-</script>
+<script src="/script.js"></script>
 {% endblock %}
