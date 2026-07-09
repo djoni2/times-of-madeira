@@ -1,69 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Times of Madeira</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        header {
-            border-bottom: 3px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .post-card {
-            background: white;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-top: 4px solid #333;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .post-card h2 {
-            margin-top: 0;
-            font-size: 1.5rem;
-        }
-        .post-card a {
-            color: #111;
-            text-decoration: none;
-        }
-        .post-card a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+---
 
-    <header>
-        <h1>Times of Madeira</h1>
-    </header>
+layout: "templates/@base.twig"
 
-    <main class="posts-grid" id="news-grid">
-        <p>Loading the latest updates...</p>
-    </main>
+---
 
-    <!-- Load Supabase and your script directly -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/script.js"></script>
-</body>
-</html>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/script.js"></script>
+<main class="posts-grid" id="news-grid">
+
+    <p>Loading the latest updates...</p>
+
+</main>
