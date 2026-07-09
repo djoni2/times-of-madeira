@@ -1,12 +1,8 @@
 {
   "name": "times-of-madeira",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "eleventy"
-  },
-  "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
-    "@factorial/eleventy-plugin-twig": "*",
-    "twig": "^1.17.1"
+    "build": "node build.js"
   }
 }
