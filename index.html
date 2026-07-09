@@ -1,10 +1,125 @@
----
-layout: "base.html"
----
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Madeira News | Times of Madeira</title>
+    <meta
+      name="description"
+      content="Latest news, views, and updates from Madeira."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/site.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-big">
+        <div class="row">
+          <div class="header__inner col col-12">
+            <div class="footer__social" aria-label="Social links">
+              <a class="social-link" href="https://x.com/timesofmadeira" title="Twitter">Twitter</a>
+              <a class="social-link" href="https://www.facebook.com/timesofmadeira" title="Facebook">Facebook</a>
+              <a class="social-link" href="https://www.instagram.com/timesofmadeira/" title="Instagram">Instagram</a>
+            </div>
 
-<main class="posts-grid" id="news-grid">
-    <p>Loading the latest updates...</p>
-</main>
+            <div class="logo" aria-label="Times of Madeira">
+              <a class="logo__link" href="/">
+                <img class="logo__image" src="/assets/times-of-madeira-logo.svg" alt="Times of Madeira" />
+              </a>
+            </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/script.js"></script>
+            <div class="hamburger" id="hamburger" onclick="document.getElementById('menuList').classList.toggle('is-visible'); this.classList.toggle('is-open')">
+              <div></div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main menu" id="menuList">
+              <div class="main-nav__box">
+                <ul class="nav__list list-reset">
+                  <li class="nav__item"><a class="nav__link" href="/">Home</a></li>
+                  <li class="nav__item"><a class="nav__link" href="/tag/society/">Society</a></li>
+                  <li class="nav__item"><a class="nav__link" href="/tag/tourism/">Tourism</a></li>
+                  <li class="nav__item"><a class="nav__link" href="/tag/politics/">Politics</a></li>
+                  <li class="nav__item"><a class="nav__link" href="/tag/funchal/">Funchal</a></li>
+                  <li class="nav__item"><a class="nav__link" href="/tag/economy/">Economy</a></li>
+                </ul>
+              </div>
+
+              <div class="nav-button">
+                <div class="nav-search">
+                  <a class="nav-search-button" href="/tag/" aria-label="Search tags"><i aria-hidden="true">⌕</i></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col col-12">
+            <div class="hero__inner">
+              <a href="https://www.timesofmadeira.com" title="Madeira News | Times of Madeira">
+                <img class="hero__logo" src="/assets/times-of-madeira-logo.svg" alt="Madeira News | Times of Madeira" />
+              </a>
+              <div class="hero__slogan" id="slogan">Madeira news, wrapped in context.</div>
+              <div class="hero__cta">
+                <a href="/article.html?post=welcome">Find Your Article!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content" role="main" aria-label="Content">
+      <div class="container">
+        <div class="row" id="news-grid">
+          <div class="col col-12">
+            <p class="loading">Loading the latest updates...</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-12">
+            <div id="pagination" class="pagination"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Madeira News | Times of Madeira</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/script.js"></script>
+    <script>
+      const slogans = [
+        'Madeira news, wrapped in context.',
+        'Madeira news. Be political!',
+        'Be informed, be engaged & demand better from your leaders.',
+        'Madeira in scope. Know more, understand better.',
+        'News from Madeira Island.',
+        'No democracy without civic engagement.',
+        'Read more!'
+      ];
+      const sloganEl = document.getElementById('slogan');
+      if (sloganEl) {
+        const pickSlogan = () => {
+          const randomIndex = Math.floor(Math.random() * slogans.length);
+          sloganEl.textContent = slogans[randomIndex];
+        };
+        pickSlogan();
+        setInterval(pickSlogan, 5000);
+      }
+    </script>
+  </body>
+</html>

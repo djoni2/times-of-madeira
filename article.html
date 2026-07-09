@@ -1,37 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Times of Madeira</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
+    <meta name="description" content="Read the latest story from Madeira." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/site.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-big">
+        <div class="row">
+          <div class="header__inner col col-12">
+            <div class="logo" aria-label="Times of Madeira">
+              <a class="logo__link" href="/">
+                <img class="logo__image" src="/assets/times-of-madeira-logo.svg" alt="Times of Madeira" />
+              </a>
+            </div>
+            <nav class="main-nav" aria-label="Primary">
+              <div class="main-nav__box">
+                <ul class="nav__list list-reset">
+                  <li class="nav__item"><a class="nav__link" href="/">Home</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <main class="single-post">
-        <h1 id="post-title">Loading...</h1>
-        <div class="post-content" id="post-body">Loading...</div>
+    <main class="container single-post-wrap">
+      <article class="single-post">
+        <div class="post-head">
+          <div class="post-head__inner">
+            <div class="post__meta">
+              <div class="post__tags">
+                <a class="post__tag" href="/">Madeira</a>
+              </div>
+              <time class="post__date" id="post-date" datetime="">Loading...</time>
+            </div>
+            <h1 class="post-title" id="post-title">Loading...</h1>
+            <p class="post-description" id="post-description">Loading the article...</p>
+          </div>
+          <div class="image-box" id="post-image" aria-hidden="true"></div>
+        </div>
+        <div class="post-content" id="post-body">Loading the article...</div>
+      </article>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = "https://rbfhbcsgjsypuzzgcbpo.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_rV4oivvNDiHh_O_2TLKAQQ_I29j5muX"; 
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const SUPABASE_URL = "https://rbfhbcsgjsypuzzgcbpo.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_rV4oivvNDiHh_O_2TLKAQQ_I29j5muX";
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function fetchArticle() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const slug = urlParams.get('post');
-            if (!slug) return;
+      async function fetchArticle() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get("post");
+        if (!slug) return;
 
-            const { data, error } = await supabaseClient.from('posts').select('*').eq('slug', slug).single();
-            if (error || !data) return;
+        const { data, error } = await supabaseClient
+          .from("posts")
+          .select("*")
+          .eq("slug", slug)
+          .single();
 
-            document.title = data.title;
-            document.getElementById('post-title').innerText = data.title;
-            document.getElementById('post-body').innerHTML = data.content_html;
+        if (error || !data) return;
+
+        document.title = data.title;
+        document.getElementById("post-title").innerText = data.title;
+        document.getElementById("post-description").innerText = data.description || "Read the full story from Madeira.";
+        document.getElementById("post-date").innerText = new Date().toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' });
+        document.getElementById("post-body").innerHTML = data.content_html || "The article content is being prepared.";
+
+        const imageBox = document.getElementById("post-image");
+        if (data.featured_image_url) {
+          imageBox.innerHTML = `<img src="${data.featured_image_url}" alt="${data.title}" loading="lazy" />`;
+        } else {
+          imageBox.innerHTML = "";
         }
-        fetchArticle();
+      }
+
+      fetchArticle();
     </script>
-</body>
+  </body>
 </html>

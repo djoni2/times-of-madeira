@@ -29,6 +29,7 @@
 
 .logo__link {
   display: inline-flex;
+  align-items: center;
   font-family: var(--heading-font-family);
   font-size: 40px;
   font-weight: 800;
@@ -39,7 +40,9 @@
 }
 
 .logo__image {
-  max-height: 50px;
+  display: block;
+  max-height: 58px;
+  width: auto;
 }
 
 /* Nav */
