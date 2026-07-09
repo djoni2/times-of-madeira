@@ -1,5 +1,5 @@
 {
-  "name": "times-of-madeira-site",
+  "name": "times-of-madeira",
   "version": "1.0.0",
   "scripts": {
     "build": "eleventy"
