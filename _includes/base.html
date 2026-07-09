@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Times of Madeira | Breaking Madeira Island News</title>
+  <meta name="description" content="Times of Madeira: Your leading source for breaking news, cultural insights, and political stories from across the Madeira archipelago.">
+
+  <style>
+    :root {
+      --base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --heading-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --base-font-size: 16px;
+      --base-font-style: normal;
+      --base-font-weight: 400;
+      --base-line-height: 1.6;
+    }
+    .mode-light:root, :root {
+      --color-accent: #000000;
+      --background-color: #ffffff;
+      --background-alt-color: #f9f9f9;
+      --background-gradient-start: #ffffff;
+      --background-gradient-end: #ffffff;
+      --text-color: #333333;
+      --text-alt-color: #666666;
+      --heading-font-color: #111111;
+      --link-color: #0044cc;
+      --link-color-hover: #002288;
+      --border-color: #eeeeee;
+      --code-color: #cc0000;
+      --code-background-color: #f4f4f4;
+    }
+  </style>
+
+  <script src="/script.js"></script>
+</head>
+<body>
+
+  {{ content | safe }}
+
+</body>
+</html>
