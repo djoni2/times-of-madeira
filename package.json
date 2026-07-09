@@ -1,0 +1,11 @@
+{
+  "name": "times-of-madeira-site",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "eleventy-plugin-twig": "^1.0.0"
+  }
+}
