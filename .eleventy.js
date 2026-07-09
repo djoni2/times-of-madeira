@@ -1,8 +1,7 @@
 const Twig = require("twig");
-const path = require("path");
 
 module.exports = function(eleventyConfig) {
-  // Pass through your static asset folders cleanly to the final build
+  // Pass through your static asset folders cleanly
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("script.js");
@@ -13,42 +12,10 @@ module.exports = function(eleventyConfig) {
   Twig.extendFilter("asset", (value) => value || "");
   Twig.extendFunction("icon", (name) => ``);
 
-  eleventyConfig.addTemplateFormats("html,twig");
-  
-  eleventyConfig.addExtension("html", {
-    compile: async (inputContent, inputPath) => {
-      return async (data) => {
-        if (data.layout || inputContent.includes("{% extends")) {
-          return new Promise((resolve) => {
-            const targetTemplate = data.layout ? data.layout : "templates/@base.twig";
-            
-            Twig.renderFile(
-              path.resolve(targetTemplate),
-              {
-                ...data,
-                settings: {
-                  views: path.resolve(".")
-                }
-              },
-              (err, html) => {
-                if (err) {
-                  resolve(`\n${inputContent}`);
-                } else {
-                  resolve(html);
-                }
-              }
-            );
-          });
-        }
-        return inputContent;
-      };
-    }
-  });
-
   return {
     dir: {
       input: ".",
-      includes: ".", // Forces Eleventy to look at your actual folders instead of requiring '_includes'
+      includes: "_includes", // Restores the standard, safe Eleventy layout folder
       output: "_site"
     }
   };
